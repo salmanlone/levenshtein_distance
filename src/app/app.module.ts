@@ -10,8 +10,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ErrorComponent } from './error/error.component';
+import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormComponent } from './form/form.component';
+import { GridComponent } from './grid/grid.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { FormComponent } from './form/form.component';
     HomeComponent,
     AboutComponent,
     ErrorComponent,
-    FormComponent
+    FormComponent,
+    MenuComponent,
+    GridComponent
   ],
   imports: [
     CommonModule,
