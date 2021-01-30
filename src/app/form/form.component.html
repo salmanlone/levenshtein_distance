@@ -12,6 +12,8 @@
         </mat-error>
     </mat-form-field>
     <div class="button-wrapper">
-        <button mat-flat-button color="primary" [disabled]="!isValidForm()"><span [matTooltip]="!isValidForm() ? 'Type something in text boxes' : 'Submit'">Submit</span></button>
+        <button mat-flat-button color="primary" [disabled]="!myForm.valid" (click)="getApiData()">
+            <span [matTooltip]="!myForm.valid ? 'Type something in text boxes' : 'Submit'">Submit</span>
+        </button>
     </div>
 </form>

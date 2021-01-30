@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
+import {AlgoApiService} from "../core/algo-api.service"
+
 export interface Subject {
   name: string;
 }
@@ -13,10 +15,16 @@ export interface Subject {
 export class FormComponent implements OnInit {
   myForm: FormGroup;
 
-  constructor(public fb: FormBuilder) { }
+  constructor(public fb: FormBuilder, private algoApiService: AlgoApiService) { }
 
   ngOnInit(): void {
     this.reactiveForm()
+  }
+
+  getApiData = () =>{
+    this.algoApiService.sendGetRequest().subscribe((data: any[]) => {
+      this.algoApiService.updateApiData(data);
+    })
   }
 
   /* Reactive form */
@@ -29,10 +37,6 @@ export class FormComponent implements OnInit {
 
   errorHandling = (control: string, error: string) => {
     return this.myForm.controls[control].hasError(error);
-  }
-
-  isValidForm = () => {
-    return !this.myForm.invalid;
   }
   
   submitForm = () => {
