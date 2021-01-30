@@ -1,3 +1,4 @@
+import { AlgoApiService } from './core/algo-api.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,9 @@ import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormComponent } from './form/form.component';
 import { GridComponent } from './grid/grid.component';
+
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -32,9 +36,10 @@ import { GridComponent } from './grid/grid.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AlgoApiService],
   bootstrap: [AppComponent],
   entryComponents: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
