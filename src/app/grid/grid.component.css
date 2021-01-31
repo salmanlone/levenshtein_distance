@@ -22,3 +22,10 @@ table.minimalistBlack thead th {
 table.minimalistBlack tfoot {
   font-weight: bold;
 }
+
+.distance {
+  font-size: 100px;
+  font-weight: bold;
+  font-family: cursive;
+  text-align: center;
+}

@@ -18,13 +18,7 @@ export class GridComponent implements OnInit {
 
   constructor(private algoApiService: AlgoApiService) { }
 
-  firstInput: string ="";
-  firstInputArray: any;
-  firstLength: any = 0;
-
-  secondInput: string ="";
-  secondInputArray: any;
-  secondLength: any = 0;
+  distance: number;
 
   matrix: any;
 
@@ -36,9 +30,8 @@ export class GridComponent implements OnInit {
   getApiData(){
     return this.algoApiService.apiData.subscribe(data => {
 
-      console.log(data);
       localStorage.setItem("Distance", data.Distance);
-
+      this.distance = data.Distance;
       this.matrix = data.Matrix;
     });
   }
