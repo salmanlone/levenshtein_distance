@@ -1,17 +1,27 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {IForm} from '../core/interfaces/IForm'
+
 
 import {  throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
+
+interface Result {
+  FirstInput :string,
+  SecondInput :string,
+  Distance :number,
+  Matrix :number[][]
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlgoApiService {
 
-  private REST_API_SERVER = "https://jsonplaceholder.typicode.com/todos/1";
-
+  private Levenshtein_Distance_API = environment.api_url;
+  
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private httpClient: HttpClient) { }
@@ -20,11 +30,27 @@ export class AlgoApiService {
   apiDataObservable = this.apiData.asObservable();
 
   updateApiData(data: any){
-    this.apiData.next(data)
-    localStorage.setItem("apiResponse", data.toString());
+    this.apiData.next(data);
   }
 
-   handleError(error: HttpErrorResponse) {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'secretKey': environment.secretKey,
+    })
+  };
+
+  sendPostRequest(formInputsObj:IForm){
+    return this.httpClient.post<Result>(this.Levenshtein_Distance_API, formInputsObj, this.httpOptions ).pipe(retry(3), catchError(this.handleError));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Unsubscribe from the subject
+    this.destroy$.unsubscribe();
+  }
+
+  handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
       // Client-side errors
@@ -35,15 +61,5 @@ export class AlgoApiService {
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
-  }
-
-  sendGetRequest(){
-    return this.httpClient.get(this.REST_API_SERVER).pipe(retry(3), catchError(this.handleError));
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    // Unsubscribe from the subject
-    this.destroy$.unsubscribe();
   }
 }
