@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
 
 import {AlgoApiService} from "../core/algo-api.service"
+import {IForm} from '../core/interfaces/IForm'
 
-export interface Subject {
-  name: string;
-}
 
 @Component({
   selector: 'app-form',
@@ -14,6 +12,8 @@ export interface Subject {
 })
 export class FormComponent implements OnInit {
   myForm: FormGroup;
+  firstInput = new FormControl('', [Validators.required]);
+  secondInput= new FormControl('', [Validators.required]);
 
   constructor(public fb: FormBuilder, private algoApiService: AlgoApiService) { }
 
@@ -21,8 +21,8 @@ export class FormComponent implements OnInit {
     this.reactiveForm()
   }
 
-  getApiData = () =>{
-    this.algoApiService.sendGetRequest().subscribe((data: any[]) => {
+  getApiData = (formInputsObj:IForm) =>{
+    this.algoApiService.sendPostRequest(formInputsObj).subscribe(data => {
       this.algoApiService.updateApiData(data);
     })
   }
@@ -30,8 +30,8 @@ export class FormComponent implements OnInit {
   /* Reactive form */
   reactiveForm = () => {
     this.myForm = this.fb.group({
-      firstInput: ['', [Validators.required]],
-      secondInput: ['', [Validators.required]],
+      firstInput: this.firstInput,
+      secondInput: this.secondInput,
     })
   }
 
@@ -40,6 +40,11 @@ export class FormComponent implements OnInit {
   }
   
   submitForm = () => {
-    console.log(this.myForm.value)
+    const formInputsObj: IForm ={
+      FirstInput : this.myForm.value.firstInput,
+      SecondInput : this.myForm.value.secondInput,
+    }
+
+    return this.getApiData(formInputsObj);
   }
 }

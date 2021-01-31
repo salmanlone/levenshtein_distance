@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
     <mat-form-field class="example-full-width" appearance="standard">
         <input matInput placeholder="First Input" formControlName="firstInput">
         <mat-error *ngIf="errorHandling('firstInput', 'required')">
@@ -12,7 +12,7 @@
         </mat-error>
     </mat-form-field>
     <div class="button-wrapper">
-        <button mat-flat-button color="primary" [disabled]="!myForm.valid" (click)="getApiData()">
+        <button mat-flat-button color="primary" [disabled]="!myForm.valid">
             <span [matTooltip]="!myForm.valid ? 'Type something in text boxes' : 'Submit'">Submit</span>
         </button>
     </div>
