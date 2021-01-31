@@ -6,6 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve -o` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Requirements
+- Node and NPM
+- angular-cli
+- Code Editor
+- Typescript
+
 ## API
 - go to following repo and follow the instruions given in Readme file.
 
