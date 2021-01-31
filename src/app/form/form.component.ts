@@ -12,8 +12,8 @@ import {IForm} from '../core/interfaces/IForm'
 })
 export class FormComponent implements OnInit {
   myForm: FormGroup;
-  firstInput = new FormControl('', [Validators.required]);
-  secondInput= new FormControl('', [Validators.required]);
+  firstInput = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+  secondInput= new FormControl('', [Validators.required, Validators.maxLength(50)]);
 
   constructor(public fb: FormBuilder, private algoApiService: AlgoApiService) { }
 
@@ -36,6 +36,7 @@ export class FormComponent implements OnInit {
   }
 
   errorHandling = (control: string, error: string) => {
+    console.log(error)
     return this.myForm.controls[control].hasError(error);
   }
   
